@@ -2,6 +2,7 @@ package com.qimu.smbms.model.vo.bill;
 
 
 import com.qimu.smbms.model.domain.Bill;
+import com.qimu.smbms.model.domain.Provider;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,6 +18,8 @@ import java.util.List;
 public class BillVo implements Serializable {
 
     private Long total;
+
+    private List<Provider> providerList;
 
     private List<Bill> billList;
 }

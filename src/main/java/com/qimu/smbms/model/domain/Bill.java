@@ -1,9 +1,6 @@
 package com.qimu.smbms.model.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qimu.smbms.constant.UserConstant;
 import lombok.Data;
@@ -86,6 +83,12 @@ public class Bill implements Serializable {
      * 供应商ID
      */
     private Long providerId;
+
+    /**
+     * 逻辑删除
+     */
+    @TableLogic
+    private Integer isDelete;
 
     /**
      * 供应商名称

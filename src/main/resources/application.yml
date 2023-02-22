@@ -8,7 +8,7 @@ spring:
     username: root
     password: 1234
 server:
-  port: 8088
+  port: 8090
   reactive:
     session:
       timeout: 86400
@@ -17,3 +17,8 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      logic-delete-field: isDelete

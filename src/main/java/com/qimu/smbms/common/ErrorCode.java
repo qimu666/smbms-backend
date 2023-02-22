@@ -12,6 +12,10 @@ public enum ErrorCode {
      */
     NOT_LOGIN(40100, "未登录", ""),
     /**
+     * 操作成功
+     */
+    ERROR_CODE(40400, "操作失败", ""),
+    /**
      * 失败
      */
     OPERATE_ERROR(40002, "error", ""),

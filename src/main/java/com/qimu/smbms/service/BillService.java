@@ -21,4 +21,13 @@ public interface BillService extends IService<Bill> {
      * @return
      */
     BillVo selectBills(String productName, Integer providerId, Integer isPayment, Integer pageIndex, Integer pageSize);
+
+    /**
+     * 根据id获取订单信息
+     * @param id
+     * @return
+     */
+    Bill getBillById(Integer id);
+
+    Long addBill(Bill bill);
 }
