@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qimu.smbms.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.qimu.smbms.model.domain.User">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userCode" column="userCode" jdbcType="VARCHAR"/>
+        <result property="userName" column="userName" jdbcType="VARCHAR"/>
+        <result property="userPassword" column="userPassword" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="TINYINT"/>
+        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="userRole" column="userRole" jdbcType="BIGINT"/>
+        <result property="createdBy" column="createdBy" jdbcType="BIGINT"/>
+        <result property="creationDate" column="creationDate" jdbcType="TIMESTAMP"/>
+        <result property="modifyBy" column="modifyBy" jdbcType="BIGINT"/>
+        <result property="modifyDate" column="modifyDate" jdbcType="TIMESTAMP"/>
+        <result property="loginStatus" column="loginStatus" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,userCode,userName,
+        userPassword,gender,birthday,
+        phone,address,userRole,
+        createdBy,creationDate,modifyBy,
+        modifyDate，loginStatus
+    </sql>
+</mapper>

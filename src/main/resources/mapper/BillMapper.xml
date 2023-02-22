@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qimu.smbms.mapper.BillMapper">
+
+    <resultMap id="BaseResultMap" type="com.qimu.smbms.model.domain.Bill">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="billCode" column="billCode" jdbcType="VARCHAR"/>
+            <result property="productName" column="productName" jdbcType="VARCHAR"/>
+            <result property="productDesc" column="productDesc" jdbcType="VARCHAR"/>
+            <result property="productUnit" column="productUnit" jdbcType="VARCHAR"/>
+            <result property="productCount" column="productCount" jdbcType="DECIMAL"/>
+            <result property="totalPrice" column="totalPrice" jdbcType="DECIMAL"/>
+            <result property="isPayment" column="isPayment" jdbcType="INTEGER"/>
+            <result property="createdBy" column="createdBy" jdbcType="BIGINT"/>
+            <result property="creationDate" column="creationDate" jdbcType="TIMESTAMP"/>
+            <result property="modifyBy" column="modifyBy" jdbcType="BIGINT"/>
+            <result property="modifyDate" column="modifyDate" jdbcType="TIMESTAMP"/>
+            <result property="providerId" column="providerId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,billCode,productName,
+        productDesc,productUnit,productCount,
+        totalPrice,isPayment,createdBy,
+        creationDate,modifyBy,modifyDate,
+        providerId
+    </sql>
+</mapper>

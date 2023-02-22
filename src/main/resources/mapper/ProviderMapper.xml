@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qimu.smbms.mapper.ProviderMapper">
+
+    <resultMap id="BaseResultMap" type="com.qimu.smbms.model.domain.Provider">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="proCode" column="proCode" jdbcType="VARCHAR"/>
+            <result property="proName" column="proName" jdbcType="VARCHAR"/>
+            <result property="proDesc" column="proDesc" jdbcType="VARCHAR"/>
+            <result property="proContact" column="proContact" jdbcType="VARCHAR"/>
+            <result property="proPhone" column="proPhone" jdbcType="VARCHAR"/>
+            <result property="proAddress" column="proAddress" jdbcType="VARCHAR"/>
+            <result property="proFax" column="proFax" jdbcType="VARCHAR"/>
+            <result property="createdBy" column="createdBy" jdbcType="BIGINT"/>
+            <result property="creationDate" column="creationDate" jdbcType="TIMESTAMP"/>
+            <result property="modifyDate" column="modifyDate" jdbcType="TIMESTAMP"/>
+            <result property="modifyBy" column="modifyBy" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,proCode,proName,
+        proDesc,proContact,proPhone,
+        proAddress,proFax,createdBy,
+        creationDate,modifyDate,modifyBy
+    </sql>
+</mapper>
