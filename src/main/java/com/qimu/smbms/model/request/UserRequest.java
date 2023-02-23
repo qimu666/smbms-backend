@@ -1,6 +1,5 @@
 package com.qimu.smbms.model.request;
 
-import com.qimu.smbms.model.domain.Role;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,16 +12,7 @@ import java.io.Serializable;
  */
 @Data
 public class UserRequest implements Serializable {
-    private Integer id;
-    private String userCode;
-    private String userName;
-    private String userPassword;
-    private Integer gender;
-    private String birthday;
-    private String phone;
-    private String address;
-    private Integer userRole;
-    private Integer createdBy;
-    private Integer modifyBy;
-    private Role role;
+    private String oldPassword;
+    private String newPassword;
+    private String reNewPassword;
 }

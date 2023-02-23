@@ -13,6 +13,8 @@ server:
     session:
       timeout: 86400
   address: 0.0.0.0
+  servlet:
+    context-path: /api
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false

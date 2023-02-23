@@ -7,6 +7,7 @@ import com.qimu.smbms.constant.UserConstant;
 import com.qimu.smbms.exception.BusinessException;
 import com.qimu.smbms.model.domain.Role;
 import com.qimu.smbms.model.domain.User;
+import com.qimu.smbms.model.request.UserRequest;
 import com.qimu.smbms.service.RoleService;
 import com.qimu.smbms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author qimu
  */
 @Controller
-@CrossOrigin(value = "http://localhost:8089",allowCredentials = "true")
+@CrossOrigin(value = {"http://localhost:8089", "http://101.43.61.87"}, allowCredentials = "true")
 @RequestMapping("/user")
 public class UserController {
     @Autowired
@@ -193,6 +194,7 @@ public class UserController {
     //     return ResultUtil.success(ErrorCode.OPERATE_ERROR, "操作失败");
     // }
     //
+
     /**
      * 退出登录 删除session信息
      *
@@ -221,5 +223,15 @@ public class UserController {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }
         return ResultUtil.success(currentUser, ErrorCode.SUCCESS);
+    }
+
+    @PutMapping("/updatePassword")
+    @ResponseBody
+    public BaseResponse<Boolean> updatePassword(@RequestBody UserRequest userRequest, HttpServletRequest request) {
+        String oldPassword = userRequest.getOldPassword();
+        String newPassword = userRequest.getNewPassword();
+        String reNewPassword = userRequest.getReNewPassword();
+        Boolean updateStatus = userService.updatePassword(oldPassword, newPassword, reNewPassword, request);
+        return ResultUtil.success(updateStatus, ErrorCode.SUCCESS);
     }
 }

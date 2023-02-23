@@ -8,6 +8,7 @@ import com.qimu.smbms.exception.BusinessException;
 import com.qimu.smbms.mapper.UserMapper;
 import com.qimu.smbms.model.domain.User;
 import com.qimu.smbms.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
  * @createDate 2023-02-18 15:50:26
  */
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
 
@@ -54,6 +56,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         session.setAttribute(UserConstant.USER_LOGIN_STATUS, user);
         session.setMaxInactiveInterval(86400);
         return user;
+    }
+
+    @Override
+    public Boolean updatePassword(String oldPassword, String newPassword, String reNewPassword, HttpServletRequest request) {
+        if (StringUtils.isAnyBlank(oldPassword, newPassword, reNewPassword)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数有误 (>_<) !!!");
+        }
+        if (newPassword.length() < 7 || reNewPassword.length() < 7) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码长度不能小于7位 (>_<) !!! ");
+        }
+        if (!newPassword.equals(reNewPassword)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入修改的密码不一致,请重试 (>_<) !!! ");
+        }
+        HttpSession session = request.getSession();
+        Object userSession = session.getAttribute(UserConstant.USER_LOGIN_STATUS);
+        User user = (User) userSession;
+        if (user == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN, "用户不存在,请重新登录 (>_<) !!!");
+        }
+        if (!oldPassword.equals(user.getUserPassword())) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码有误,请重试 (>_<) !!!");
+        }
+        user.setUserPassword(newPassword);
+        return this.updateById(user);
     }
 }
 
