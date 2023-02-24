@@ -8,10 +8,12 @@ import com.qimu.smbms.model.domain.Provider;
 import com.qimu.smbms.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/provider")
 public class ProviderController {
-    @Autowired
+    @Resource
     private ProviderService providerService;
 
     /**

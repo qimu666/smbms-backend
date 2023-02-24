@@ -20,7 +20,7 @@ public interface BillService extends IService<Bill> {
      * @param pageSize
      * @return
      */
-    BillVo selectBills(String productName, Integer providerId, Integer isPayment, Integer pageIndex, Integer pageSize);
+    BillVo selectBills(String productName, Long providerId, Integer isPayment, Integer pageIndex, Integer pageSize);
 
     /**
      * 根据id获取订单信息
@@ -30,4 +30,6 @@ public interface BillService extends IService<Bill> {
     Bill getBillById(Integer id);
 
     Long addBill(Bill bill);
+
+    boolean updateBill(Bill bill);
 }

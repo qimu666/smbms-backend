@@ -1,6 +1,8 @@
 package com.qimu.smbms.model.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,23 +14,17 @@ import java.util.Date;
  * @Description:
  */
 @Data
-public class UserPageRequest implements Serializable {
+public class UserAddRequest implements Serializable {
+    private Long id;
     private String userCode;
     private String userName;
     private Long userRole;
     private String userPassword;
     private String confirmPassword;
     private Integer gender;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;
     private String phone;
     private String address;
-    private Integer pageIndex;
-    private Integer pageSize;
-
-    public Integer getPageIndex() {
-        if (pageIndex <= 0) {
-            pageIndex = 1;
-        }
-        return pageIndex;
-    }
 }

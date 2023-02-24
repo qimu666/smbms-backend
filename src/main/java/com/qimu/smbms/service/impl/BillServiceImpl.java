@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qimu.smbms.common.ErrorCode;
+import com.qimu.smbms.constant.Common;
+import com.qimu.smbms.constant.UserConstant;
 import com.qimu.smbms.exception.BusinessException;
 import com.qimu.smbms.mapper.BillMapper;
 import com.qimu.smbms.mapper.ProviderMapper;
@@ -15,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -33,11 +36,11 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
     private ProviderMapper providerMapper;
 
     @Override
-    public BillVo selectBills(String productName, Integer providerId, Integer isPayment, Integer pageIndex, Integer pageSize) {
+    public BillVo selectBills(String productName, Long providerId, Integer isPayment, Integer pageIndex, Integer pageSize) {
         Page<Bill> billPage = new Page<>(pageIndex, pageSize);
         LambdaQueryWrapper<Bill> billLambdaQueryWrapper = new LambdaQueryWrapper<>();
         billLambdaQueryWrapper.eq(isPayment != null && !isPayment.equals(0), Bill::getIsPayment, isPayment);
-        billLambdaQueryWrapper.eq(providerId != null && !providerId.equals(0), Bill::getProviderId, providerId);
+        billLambdaQueryWrapper.eq(providerId != null && !providerId.equals(0L), Bill::getProviderId, providerId);
         billLambdaQueryWrapper.like(StringUtils.isNotBlank(productName), Bill::getProductName, productName);
         Page<Bill> billSelectData = billMapper.selectPage(billPage, billLambdaQueryWrapper);
         List<Bill> billsList = billSelectData.getRecords();
@@ -59,8 +62,8 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         LambdaQueryWrapper<Bill> billLambdaQueryWrapper = new LambdaQueryWrapper<>();
         billLambdaQueryWrapper.eq(Bill::getId, id);
         Bill bill = baseMapper.selectOne(billLambdaQueryWrapper);
-        Long billId = bill.getId();
-        Provider provider = providerMapper.selectById(billId);
+        Long providerId = bill.getProviderId();
+        Provider provider = providerMapper.selectById(providerId);
         bill.setProviderName(provider.getProName());
         return bill;
     }
@@ -72,30 +75,56 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         String productUnit = bill.getProductUnit();
         Integer isPayment = bill.getIsPayment();
         Long providerId = bill.getProviderId();
-
-        if (StringUtils.isAnyBlank(billCode, productName, productUnit)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入参数有误");
-        }
-        if (isPayment == null || Objects.equals(isPayment, 0)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入参数有误");
-        }
-        if (providerId == null || Objects.equals(providerId, 0L)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入参数有误");
-        }
-
+        bill.setCreationDate(new Date());
+        Common.checkStringIsAnyBlank(billCode, productName, productUnit);
+        isNotNull(isPayment, providerId);
         LambdaQueryWrapper<Bill> billLambdaQueryWrapper = new LambdaQueryWrapper<>();
         billLambdaQueryWrapper.eq(Bill::getBillCode, billCode);
         Bill billOne = billMapper.selectOne(billLambdaQueryWrapper);
         if (billOne != null) {
             throw new BusinessException(ErrorCode.USER_EXITS, "订单已存在");
         }
-
         boolean addStatus = this.save(bill);
         if (!addStatus) {
             throw new BusinessException(ErrorCode.ERROR_CODE, "订单创建失败,请重试");
         }
-
         return bill.getId();
+    }
+
+    /**
+     * @param bill
+     * @return
+     */
+    @Override
+    public boolean updateBill(Bill bill) {
+        Long id = bill.getId();
+        String billCode = bill.getBillCode();
+        String productName = bill.getProductName();
+        String productUnit = bill.getProductUnit();
+        Integer isPayment = bill.getIsPayment();
+        Long providerId = bill.getProviderId();
+        Common.checkStringIsAnyBlank(billCode, productName, productUnit);
+        if (id == null || id < 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入有误 (>_<) !!!");
+        }
+        isNotNull(isPayment, providerId);
+        return this.updateById(bill);
+    }
+
+    /**
+     * 判断输入是否有误
+     *
+     * @param isPayment  是否支付
+     * @param providerId 提供商id
+     */
+
+    private void isNotNull(Integer isPayment, Long providerId) {
+        if (isPayment == null || Objects.equals(isPayment, 0)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入有误 (>_<)");
+        }
+        if (providerId == null || Objects.equals(providerId, 0L)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入有误 (>_<)");
+        }
     }
 }
 

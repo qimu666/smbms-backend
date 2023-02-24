@@ -3,7 +3,7 @@ package com.qimu.smbms.controller;
 import com.qimu.smbms.common.BaseResponse;
 import com.qimu.smbms.common.ErrorCode;
 import com.qimu.smbms.common.ResultUtil;
-import com.qimu.smbms.exception.BusinessException;
+import com.qimu.smbms.constant.Common;
 import com.qimu.smbms.model.domain.Bill;
 import com.qimu.smbms.model.request.BillPageRequest;
 import com.qimu.smbms.model.vo.bill.BillVo;
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * @author qimu
  */
 @Controller
-@CrossOrigin(value = {"http://localhost:8089", "http://101.43.61.87"}, allowCredentials = "true")
+
 @RequestMapping("/bill")
 public class BillController {
     @Resource
@@ -27,10 +27,11 @@ public class BillController {
     @PostMapping("/bills")
     @ResponseBody
     public BaseResponse<BillVo> getBills(@RequestBody BillPageRequest billPageRequest) {
+        Common.notNull(billPageRequest);
         Integer pageIndex = billPageRequest.getPageIndex();
         String productName = billPageRequest.getProductName();
         Integer isPayment = billPageRequest.getIsPayment();
-        Integer providerId = billPageRequest.getProviderId();
+        Long providerId = billPageRequest.getProviderId();
         Integer pageSize = billPageRequest.getPageSize();
         BillVo billPage = billService.selectBills(productName, providerId, isPayment, pageIndex, pageSize);
         return ResultUtil.success(billPage);
@@ -39,9 +40,7 @@ public class BillController {
     @GetMapping("/{id}")
     @ResponseBody
     public BaseResponse<Bill> getBill(@PathVariable("id") Integer id) {
-        if (id == null || id.equals(0)) {
-            throw new BusinessException(ErrorCode.RESULT_ERROR);
-        }
+        Common.checkId(id);
         Bill bill = billService.getBillById(id);
         return ResultUtil.success(bill);
     }
@@ -49,7 +48,8 @@ public class BillController {
     @PutMapping("/save")
     @ResponseBody
     public BaseResponse<Bill> updateBill(@RequestBody Bill bill) {
-        boolean updateStatus = billService.updateById(bill);
+        Common.notNull(bill);
+        boolean updateStatus = billService.updateBill(bill);
         if (updateStatus) {
             return ResultUtil.success(ErrorCode.SUCCESS);
         } else {
@@ -60,9 +60,7 @@ public class BillController {
     @DeleteMapping("/{id}")
     @ResponseBody
     public BaseResponse<Bill> deleteBill(@PathVariable("id") Integer id) {
-        if (id == null || id.equals(0)) {
-            throw new BusinessException(ErrorCode.RESULT_ERROR);
-        }
+        Common.checkId(id);
         boolean deleteStatus = billService.removeById(id);
         if (deleteStatus) {
             return ResultUtil.success(ErrorCode.SUCCESS, "删除成功");
@@ -71,11 +69,11 @@ public class BillController {
         }
     }
 
-
     @PostMapping("/save")
     @ResponseBody
     public BaseResponse<Long> addBill(@RequestBody Bill bill) {
+        Common.notNull(bill);
         Long addStatus = billService.addBill(bill);
-        return ResultUtil.success(addStatus,ErrorCode.SUCCESS);
+        return ResultUtil.success(addStatus, ErrorCode.SUCCESS);
     }
 }

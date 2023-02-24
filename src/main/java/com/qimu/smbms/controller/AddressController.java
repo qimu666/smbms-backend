@@ -2,12 +2,17 @@ package com.qimu.smbms.controller;
 
 
 import com.qimu.smbms.service.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+import javax.annotation.Resource;
+
+/**
+ * @author qimu
+ */
 @Controller
 public class AddressController {
-    @Autowired
+    @Resource
     private AddressService addressService;
 
 }

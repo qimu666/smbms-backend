@@ -19,4 +19,10 @@ public interface UserConstant {
     String PAID = "已支付";
 
     String NOT_PAID = "未支付";
+
+    /**
+     * 输入的不是特殊字符正则
+     */
+    String PATTERN = "[0-9a-zA-Z]+";
+
 }

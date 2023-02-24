@@ -15,7 +15,7 @@ public class BillPageRequest implements Serializable {
     Integer pageIndex;
     String productName;
     Integer isPayment;
-    Integer providerId;
+    Long providerId;
     Integer pageSize;
 
     public Integer getPageIndex() {

@@ -1,19 +1,19 @@
 package com.qimu.smbms.model.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * `smbms_user`
+ *
  * @TableName smbms_user
  */
-@TableName(value ="smbms_user")
+@TableName(value = "smbms_user")
 @Data
 public class User implements Serializable {
     /**
@@ -45,6 +45,8 @@ public class User implements Serializable {
     /**
      * 出生日期
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;
 
     /**
@@ -70,12 +72,20 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date creationDate;
 
     /**
      * 更新者（userId）
      */
     private Long modifyBy;
+
+    /**
+     * 逻辑删除
+     */
+    @TableLogic
+    private Integer isDelete;
 
     /**
      * 更新时间
@@ -85,6 +95,12 @@ public class User implements Serializable {
      * 登录状态 0 - 没有登录 1 -已登录
      */
     private Integer loginStatus;
+
+    /**
+     * 角色名
+     */
+    @TableField(exist = false)
+    private String userRoleName;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
