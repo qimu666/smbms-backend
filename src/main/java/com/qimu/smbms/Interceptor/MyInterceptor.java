@@ -22,7 +22,6 @@ public class MyInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object attribute = request.getSession().getAttribute(UserConstant.USER_LOGIN_STATUS);
         User user = (User) attribute;
-        System.out.println("11111111111111");
         if (user == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN);
         }

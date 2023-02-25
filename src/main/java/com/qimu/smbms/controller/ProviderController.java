@@ -20,6 +20,7 @@ import java.util.List;
  * @author qimu
  */
 @Controller
+@CrossOrigin(value = {"http://localhost:8089", "http://101.43.61.87"}, allowCredentials = "true")
 @RequestMapping("/provider")
 public class ProviderController {
     @Resource

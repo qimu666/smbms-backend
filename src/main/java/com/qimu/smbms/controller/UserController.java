@@ -22,11 +22,11 @@ import javax.servlet.http.HttpServletRequest;
  * @author qimu
  */
 @Controller
+@CrossOrigin(value = {"http://localhost:8089", "http://101.43.61.87"}, allowCredentials = "true")
 @RequestMapping("/user")
 public class UserController {
     @Resource
     private UserService userService;
-
     @PostMapping("/users")
     @ResponseBody
     public BaseResponse<UserVo> getUsers(@RequestBody UserPageRequest userPageRequest) {
@@ -71,7 +71,6 @@ public class UserController {
         }
     }
 
-
     @PostMapping("/save")
     @ResponseBody
     public BaseResponse<Long> addUser(@RequestBody UserAddRequest userAddRequest) {
@@ -79,7 +78,6 @@ public class UserController {
         Long addUserStatus = userService.addUser(userAddRequest);
         return ResultUtil.success(addUserStatus, ErrorCode.SUCCESS);
     }
-
 
     /**
      * 登录
@@ -98,7 +96,6 @@ public class UserController {
         }
         return ResultUtil.success(ErrorCode.SUCCESS, u);
     }
-
 
     /**
      * 退出登录 删除session信息
