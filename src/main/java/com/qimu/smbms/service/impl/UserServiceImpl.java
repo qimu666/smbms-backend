@@ -131,7 +131,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     /**
-     * 如果id获取用户
+     * 根据id获取用户
      *
      * @param id 用户id
      * @return 用户信息
@@ -241,24 +241,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return this.updateById(user);
     }
 
-
     /**
-     * 正则匹配是否符合要求
+     * 正则校验用户编码和手机号
      *
      * @param userCode 用户编码
      * @param phone    手机号
      */
     private void userPattern(String userCode, String phone) {
-        if (!userCode.matches(UserConstant.PATTERN)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户编码不能包含特殊字符 (>_<) !!! ");
-        }
-        String phonePattern = "^[1-9]\\d{10}$";
-        if (!phone.matches(phonePattern)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "手机号不正确 (>_<) !!!");
-        }
+        Common.stringPattern(userCode);
+        Common.phonePattern(phone);
     }
 }
-
-
 
 

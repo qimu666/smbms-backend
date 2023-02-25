@@ -25,4 +25,9 @@ public interface UserConstant {
      */
     String PATTERN = "[0-9a-zA-Z]+";
 
+    /**
+     * 手机号正则
+     */
+    String PHONE_PATTERN = "^[1-9]\\d{10}$";
+
 }

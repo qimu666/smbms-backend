@@ -12,7 +12,6 @@ import com.qimu.smbms.model.request.UserPageRequest;
 import com.qimu.smbms.model.request.UserRequest;
 import com.qimu.smbms.model.vo.bill.UserVo;
 import com.qimu.smbms.service.UserService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,14 +20,20 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author qimu
  */
-@Controller
+@RestController
 @CrossOrigin(value = {"http://localhost:8089", "http://101.43.61.87"}, allowCredentials = "true")
 @RequestMapping("/user")
 public class UserController {
     @Resource
     private UserService userService;
+
+    /**
+     * 获取用户信息列表
+     *
+     * @param userPageRequest 接收前端的数据
+     * @return 用户信息列表
+     */
     @PostMapping("/users")
-    @ResponseBody
     public BaseResponse<UserVo> getUsers(@RequestBody UserPageRequest userPageRequest) {
         Common.notNull(userPageRequest);
         Integer pageIndex = userPageRequest.getPageIndex();
@@ -39,28 +44,39 @@ public class UserController {
         return ResultUtil.success(userPage);
     }
 
+    /**
+     * 根据id获取用户
+     *
+     * @param id 用户id
+     * @return 用户信息
+     */
     @GetMapping("/{id}")
-    @ResponseBody
     public BaseResponse<User> getUser(@PathVariable("id") Integer id) {
         Common.checkId(id);
         User user = userService.getUserById(id);
         return ResultUtil.success(user);
     }
 
+    /**
+     * 更新用户信息
+     *
+     * @param user 接收前端的数据
+     * @return 操作结果
+     */
     @PutMapping("/save")
-    @ResponseBody
     public BaseResponse<User> updateUser(@RequestBody User user) {
         Common.notNull(user);
         boolean updateStatus = userService.updateUser(user);
-        if (updateStatus) {
-            return ResultUtil.success(ErrorCode.SUCCESS);
-        } else {
-            return ResultUtil.error(ErrorCode.ERROR_CODE, "操作失败");
-        }
+        return updateStatus ? ResultUtil.success(ErrorCode.SUCCESS) : ResultUtil.error(ErrorCode.ERROR_CODE, "操作失败");
     }
 
+    /**
+     * 删除用户
+     *
+     * @param id 用户id
+     * @return 执行结果
+     */
     @DeleteMapping("/{id}")
-    @ResponseBody
     public BaseResponse<User> deleteUser(@PathVariable("id") Integer id) {
         Common.checkId(id);
         boolean deleteStatus = userService.removeById(id);
@@ -71,8 +87,13 @@ public class UserController {
         }
     }
 
+    /**
+     * 添加用户
+     *
+     * @param userAddRequest 接收前端传的数据
+     * @return 新用户id
+     */
     @PostMapping("/save")
-    @ResponseBody
     public BaseResponse<Long> addUser(@RequestBody UserAddRequest userAddRequest) {
         Common.notNull(userAddRequest);
         Long addUserStatus = userService.addUser(userAddRequest);
@@ -87,7 +108,6 @@ public class UserController {
      * @return 用户信息
      */
     @PostMapping("/login")
-    @ResponseBody
     public BaseResponse<User> login(@RequestBody User user, HttpServletRequest request) {
         Common.notNull(user);
         User u = userService.userLogin(user.getUserCode(), user.getUserPassword(), request);
@@ -101,7 +121,6 @@ public class UserController {
      * 退出登录 删除session信息
      *
      * @param request session
-     * @return
      */
 
     @GetMapping("/logout")
@@ -117,7 +136,6 @@ public class UserController {
      * @return session中是否存在登录的用户信息
      */
     @PostMapping("/current")
-    @ResponseBody
     public BaseResponse<User> getCurrentUser(HttpServletRequest request) {
         Object objUser = request.getSession().getAttribute(UserConstant.USER_LOGIN_STATUS);
         User currentUser = (User) objUser;
@@ -127,8 +145,14 @@ public class UserController {
         return ResultUtil.success(currentUser, ErrorCode.SUCCESS);
     }
 
+    /**
+     * 修改当前用户密码
+     *
+     * @param userRequest 用户请求参数
+     * @param request     获取session
+     * @return 执行结果
+     */
     @PutMapping("/updatePassword")
-    @ResponseBody
     public BaseResponse<Boolean> updatePassword(@RequestBody UserRequest userRequest, HttpServletRequest request) {
         Common.notNull(userRequest);
         String oldPassword = userRequest.getOldPassword();

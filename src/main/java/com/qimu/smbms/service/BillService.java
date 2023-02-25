@@ -11,25 +11,39 @@ import com.qimu.smbms.model.vo.bill.BillVo;
  */
 public interface BillService extends IService<Bill> {
     /**
-     * 分页俺条件查询数据
+     * 分页获取订单信息
+     * 支持模糊查询
      *
-     * @param productName
-     * @param providerId
-     * @param isPayment
-     * @param pageIndex
-     * @param pageSize
-     * @return
+     * @param productName 产品名
+     * @param providerId  供应商id
+     * @param isPayment   是否支付
+     * @param pageIndex   当前页
+     * @param pageSize    显示的个数
+     * @return 订单列表信息
      */
     BillVo selectBills(String productName, Long providerId, Integer isPayment, Integer pageIndex, Integer pageSize);
 
     /**
-     * 根据id获取订单信息
-     * @param id
-     * @return
+     * 通过id获取订单信息
+     *
+     * @param id 订单id
+     * @return 订单信息
      */
     Bill getBillById(Integer id);
 
+    /**
+     * 添加新订单
+     *
+     * @param bill 订单实体类
+     * @return 新订单id
+     */
     Long addBill(Bill bill);
 
+    /**
+     * 修改订单信息
+     *
+     * @param bill 订单实体类
+     * @return 成功或失败
+     */
     boolean updateBill(Bill bill);
 }

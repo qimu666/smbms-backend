@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qimu.smbms.common.ErrorCode;
 import com.qimu.smbms.constant.Common;
-import com.qimu.smbms.constant.UserConstant;
 import com.qimu.smbms.exception.BusinessException;
 import com.qimu.smbms.mapper.BillMapper;
 import com.qimu.smbms.mapper.ProviderMapper;
@@ -35,6 +34,17 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
     @Resource
     private ProviderMapper providerMapper;
 
+    /**
+     * 分页获取订单信息
+     * 支持模糊查询
+     *
+     * @param productName 产品名
+     * @param providerId  供应商id
+     * @param isPayment   是否支付
+     * @param pageIndex   当前页
+     * @param pageSize    显示的个数
+     * @return 订单列表信息
+     */
     @Override
     public BillVo selectBills(String productName, Long providerId, Integer isPayment, Integer pageIndex, Integer pageSize) {
         Page<Bill> billPage = new Page<>(pageIndex, pageSize);
@@ -57,6 +67,12 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         return billVo;
     }
 
+    /**
+     * 通过id获取订单信息
+     *
+     * @param id 订单id
+     * @return 订单信息
+     */
     @Override
     public Bill getBillById(Integer id) {
         LambdaQueryWrapper<Bill> billLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -68,6 +84,12 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         return bill;
     }
 
+    /**
+     * 添加新订单
+     *
+     * @param bill 订单实体类
+     * @return 新订单id
+     */
     @Override
     public Long addBill(Bill bill) {
         String billCode = bill.getBillCode();
@@ -92,8 +114,10 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
     }
 
     /**
-     * @param bill
-     * @return
+     * 修改订单信息
+     *
+     * @param bill 订单实体类
+     * @return 成功或失败
      */
     @Override
     public boolean updateBill(Bill bill) {

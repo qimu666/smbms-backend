@@ -47,4 +47,24 @@ public class Common {
         }
     }
 
+    /**
+     * 正则匹配字符串不包含特殊字符是否符合要求
+     *
+     * @param string 字符串
+     */
+    public static void stringPattern(String string) {
+        if (!string.matches(UserConstant.PATTERN)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户编码不能包含特殊字符 (>_<) !!! ");
+        }
+    }
+
+    /**
+     * 正则手机号是否符合要求
+     * * @param phone 手机号
+     */
+    public static void phonePattern(String phone) {
+        if (!phone.matches(UserConstant.PHONE_PATTERN)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "手机号不正确 (>_<) !!!");
+        }
+    }
 }

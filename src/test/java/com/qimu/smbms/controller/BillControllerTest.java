@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.util.Date;
 
 @SpringBootTest
 class BillControllerTest {
@@ -24,6 +22,6 @@ class BillControllerTest {
         bill.setIsPayment(1);
         bill.setProviderId(1L);
         Long addStatus = billService.addBill(bill);
-        Assertions.assertEquals(130L,addStatus);
+        Assertions.assertEquals(130L, addStatus);
     }
 }

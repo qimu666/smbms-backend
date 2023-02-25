@@ -7,13 +7,13 @@ import com.qimu.smbms.service.RoleService;
 import org.springframework.stereotype.Service;
 
 /**
-* @author qimu
-* @description 针对表【smbms_role】的数据库操作Service实现
-* @createDate 2023-02-18 15:50:23
-*/
+ * @author qimu
+ * @description 针对表【smbms_role】的数据库操作Service实现
+ * @createDate 2023-02-18 15:50:23
+ */
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
-    implements RoleService {
+        implements RoleService {
 
 }
 

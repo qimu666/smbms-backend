@@ -5,13 +5,13 @@
 <mapper namespace="com.qimu.smbms.mapper.RoleMapper">
 
     <resultMap id="BaseResultMap" type="com.qimu.smbms.model.domain.Role">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="roleCode" column="roleCode" jdbcType="VARCHAR"/>
-            <result property="roleName" column="roleName" jdbcType="VARCHAR"/>
-            <result property="createdBy" column="createdBy" jdbcType="BIGINT"/>
-            <result property="creationDate" column="creationDate" jdbcType="TIMESTAMP"/>
-            <result property="modifyBy" column="modifyBy" jdbcType="BIGINT"/>
-            <result property="modifyDate" column="modifyDate" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="roleCode" column="roleCode" jdbcType="VARCHAR"/>
+        <result property="roleName" column="roleName" jdbcType="VARCHAR"/>
+        <result property="createdBy" column="createdBy" jdbcType="BIGINT"/>
+        <result property="creationDate" column="creationDate" jdbcType="TIMESTAMP"/>
+        <result property="modifyBy" column="modifyBy" jdbcType="BIGINT"/>
+        <result property="modifyDate" column="modifyDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">

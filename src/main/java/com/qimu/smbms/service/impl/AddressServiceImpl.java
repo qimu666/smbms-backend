@@ -7,13 +7,13 @@ import com.qimu.smbms.service.AddressService;
 import org.springframework.stereotype.Service;
 
 /**
-* @author qimu
-* @description 针对表【smbms_address】的数据库操作Service实现
-* @createDate 2023-02-18 15:49:17
-*/
+ * @author qimu
+ * @description 针对表【smbms_address】的数据库操作Service实现
+ * @createDate 2023-02-18 15:49:17
+ */
 @Service
 public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address>
-    implements AddressService {
+        implements AddressService {
 
 }
 
