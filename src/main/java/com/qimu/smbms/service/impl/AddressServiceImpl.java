@@ -5,6 +5,7 @@ import com.qimu.smbms.mapper.AddressMapper;
 import com.qimu.smbms.model.domain.Address;
 import com.qimu.smbms.service.AddressService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author qimu
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
  * @createDate 2023-02-18 15:49:17
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address>
         implements AddressService {
 

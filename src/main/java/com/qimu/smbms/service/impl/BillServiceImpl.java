@@ -14,6 +14,7 @@ import com.qimu.smbms.model.vo.bill.BillVo;
 import com.qimu.smbms.service.BillService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
  * @createDate 2023-02-18 15:50:01
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         implements BillService {
     @Resource

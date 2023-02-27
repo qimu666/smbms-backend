@@ -80,11 +80,7 @@ public class UserController {
     public BaseResponse<User> deleteUser(@PathVariable("id") Integer id) {
         Common.checkId(id);
         boolean deleteStatus = userService.removeById(id);
-        if (deleteStatus) {
-            return ResultUtil.success(ErrorCode.SUCCESS, "删除成功");
-        } else {
-            return ResultUtil.error(ErrorCode.ERROR_CODE, "删除失败");
-        }
+        return deleteStatus ? ResultUtil.success(ErrorCode.SUCCESS, "删除成功") : ResultUtil.error(ErrorCode.ERROR_CODE, "删除失败");
     }
 
     /**
@@ -110,11 +106,11 @@ public class UserController {
     @PostMapping("/login")
     public BaseResponse<User> login(@RequestBody User user, HttpServletRequest request) {
         Common.notNull(user);
-        User u = userService.userLogin(user.getUserCode(), user.getUserPassword(), request);
-        if (u == null) {
+        User loginStatus = userService.userLogin(user.getUserCode(), user.getUserPassword(), request);
+        if (loginStatus == null) {
             throw new BusinessException(ErrorCode.RESULT_ERROR, "账号密码有误！");
         }
-        return ResultUtil.success(ErrorCode.SUCCESS, u);
+        return ResultUtil.success(ErrorCode.SUCCESS, loginStatus);
     }
 
     /**

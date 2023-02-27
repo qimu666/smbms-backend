@@ -12,6 +12,7 @@ import com.qimu.smbms.model.vo.bill.ProviderVo;
 import com.qimu.smbms.service.ProviderService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -23,6 +24,7 @@ import java.util.List;
  * @createDate 2023-02-18 15:50:20
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ProviderServiceImpl extends ServiceImpl<ProviderMapper, Provider>
         implements ProviderService {
     @Resource
