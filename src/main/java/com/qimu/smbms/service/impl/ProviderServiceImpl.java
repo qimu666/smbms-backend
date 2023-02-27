@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qimu.smbms.common.ErrorCode;
-import com.qimu.smbms.constant.Common;
+import com.qimu.smbms.common.CheckInputCommon;
 import com.qimu.smbms.exception.BusinessException;
 import com.qimu.smbms.mapper.ProviderMapper;
 import com.qimu.smbms.model.domain.Provider;
@@ -123,7 +123,7 @@ public class ProviderServiceImpl extends ServiceImpl<ProviderMapper, Provider>
         String proFax = provider.getProFax();
         provider.setModifyDate(new Date());
         providerCheck(proName, proPhone);
-        Common.checkStringIsAnyBlank(proCode, proName, proDesc, proContact, proPhone, proAddress, proFax);
+        CheckInputCommon.checkStringIsAnyBlank(proCode, proName, proDesc, proContact, proPhone, proAddress, proFax);
         return provider;
     }
 
@@ -135,8 +135,8 @@ public class ProviderServiceImpl extends ServiceImpl<ProviderMapper, Provider>
      */
 
     private void providerCheck(String proName, String proPhone) {
-        Common.stringPattern(proName);
-        Common.phonePattern(proPhone);
+        CheckInputCommon.stringPattern(proName);
+        CheckInputCommon.phonePattern(proPhone);
     }
 
 }

@@ -3,7 +3,7 @@ package com.qimu.smbms.controller;
 import com.qimu.smbms.common.BaseResponse;
 import com.qimu.smbms.common.ErrorCode;
 import com.qimu.smbms.common.ResultUtil;
-import com.qimu.smbms.constant.Common;
+import com.qimu.smbms.common.CheckInputCommon;
 import com.qimu.smbms.model.domain.Bill;
 import com.qimu.smbms.model.request.BillPageRequest;
 import com.qimu.smbms.model.vo.bill.BillVo;
@@ -27,7 +27,7 @@ public class BillController {
 
     @PostMapping("/bills")
     public BaseResponse<BillVo> getBills(@RequestBody BillPageRequest billPageRequest) {
-        Common.notNull(billPageRequest);
+        CheckInputCommon.notNull(billPageRequest);
         Integer pageIndex = billPageRequest.getPageIndex();
         String productName = billPageRequest.getProductName();
         Integer isPayment = billPageRequest.getIsPayment();
@@ -39,7 +39,7 @@ public class BillController {
 
     @GetMapping("/{id}")
     public BaseResponse<Bill> getBill(@PathVariable("id") Integer id) {
-        Common.checkId(id);
+        CheckInputCommon.checkId(id);
         Bill bill = billService.getBillById(id);
         return ResultUtil.success(bill);
     }
@@ -47,7 +47,7 @@ public class BillController {
     @PutMapping({"/save"})
     @ResponseBody
     public BaseResponse<Bill> updateBill(@RequestBody Bill bill) {
-        Common.notNull(bill);
+        CheckInputCommon.notNull(bill);
         boolean updateStatus = this.billService.updateBill(bill);
         return updateStatus ? ResultUtil.success(ErrorCode.SUCCESS) : ResultUtil.error(ErrorCode.ERROR_CODE, "操作失败");
     }
@@ -55,7 +55,7 @@ public class BillController {
     @DeleteMapping({"/{id}"})
     @ResponseBody
     public BaseResponse<Bill> deleteBill(@PathVariable("id") Integer id) {
-        Common.checkId(id);
+        CheckInputCommon.checkId(id);
         boolean deleteStatus = this.billService.removeById(id);
         return deleteStatus ? ResultUtil.success(ErrorCode.SUCCESS, "删除成功") : ResultUtil.error(ErrorCode.ERROR_CODE, "删除失败");
     }
@@ -63,7 +63,7 @@ public class BillController {
     @PostMapping({"/save"})
     @ResponseBody
     public BaseResponse<Long> addBill(@RequestBody Bill bill) {
-        Common.notNull(bill);
+        CheckInputCommon.notNull(bill);
         Long addStatus = this.billService.addBill(bill);
         return ResultUtil.success(addStatus, ErrorCode.SUCCESS);
     }

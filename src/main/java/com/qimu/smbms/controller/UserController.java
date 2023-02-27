@@ -3,7 +3,7 @@ package com.qimu.smbms.controller;
 import com.qimu.smbms.common.BaseResponse;
 import com.qimu.smbms.common.ErrorCode;
 import com.qimu.smbms.common.ResultUtil;
-import com.qimu.smbms.constant.Common;
+import com.qimu.smbms.common.CheckInputCommon;
 import com.qimu.smbms.constant.UserConstant;
 import com.qimu.smbms.exception.BusinessException;
 import com.qimu.smbms.model.domain.User;
@@ -35,7 +35,7 @@ public class UserController {
      */
     @PostMapping("/users")
     public BaseResponse<UserVo> getUsers(@RequestBody UserPageRequest userPageRequest) {
-        Common.notNull(userPageRequest);
+        CheckInputCommon.notNull(userPageRequest);
         Integer pageIndex = userPageRequest.getPageIndex();
         String userName = userPageRequest.getUserName();
         Long userRole = userPageRequest.getUserRole();
@@ -52,7 +52,7 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public BaseResponse<User> getUser(@PathVariable("id") Integer id) {
-        Common.checkId(id);
+        CheckInputCommon.checkId(id);
         User user = userService.getUserById(id);
         return ResultUtil.success(user);
     }
@@ -65,7 +65,7 @@ public class UserController {
      */
     @PutMapping("/save")
     public BaseResponse<User> updateUser(@RequestBody User user) {
-        Common.notNull(user);
+        CheckInputCommon.notNull(user);
         boolean updateStatus = userService.updateUser(user);
         return updateStatus ? ResultUtil.success(ErrorCode.SUCCESS) : ResultUtil.error(ErrorCode.ERROR_CODE, "操作失败");
     }
@@ -78,7 +78,7 @@ public class UserController {
      */
     @DeleteMapping("/{id}")
     public BaseResponse<User> deleteUser(@PathVariable("id") Integer id) {
-        Common.checkId(id);
+        CheckInputCommon.checkId(id);
         boolean deleteStatus = userService.removeById(id);
         return deleteStatus ? ResultUtil.success(ErrorCode.SUCCESS, "删除成功") : ResultUtil.error(ErrorCode.ERROR_CODE, "删除失败");
     }
@@ -91,7 +91,7 @@ public class UserController {
      */
     @PostMapping("/save")
     public BaseResponse<Long> addUser(@RequestBody UserAddRequest userAddRequest) {
-        Common.notNull(userAddRequest);
+        CheckInputCommon.notNull(userAddRequest);
         Long addUserStatus = userService.addUser(userAddRequest);
         return ResultUtil.success(addUserStatus, ErrorCode.SUCCESS);
     }
@@ -105,7 +105,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public BaseResponse<User> login(@RequestBody User user, HttpServletRequest request) {
-        Common.notNull(user);
+        CheckInputCommon.notNull(user);
         User loginStatus = userService.userLogin(user.getUserCode(), user.getUserPassword(), request);
         if (loginStatus == null) {
             throw new BusinessException(ErrorCode.RESULT_ERROR, "账号密码有误！");
@@ -150,7 +150,7 @@ public class UserController {
      */
     @PutMapping("/updatePassword")
     public BaseResponse<Boolean> updatePassword(@RequestBody UserRequest userRequest, HttpServletRequest request) {
-        Common.notNull(userRequest);
+        CheckInputCommon.notNull(userRequest);
         String oldPassword = userRequest.getOldPassword();
         String newPassword = userRequest.getNewPassword();
         String reNewPassword = userRequest.getReNewPassword();

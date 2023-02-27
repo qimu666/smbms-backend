@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qimu.smbms.common.ErrorCode;
-import com.qimu.smbms.constant.Common;
+import com.qimu.smbms.common.CheckInputCommon;
 import com.qimu.smbms.constant.UserConstant;
 import com.qimu.smbms.exception.BusinessException;
 import com.qimu.smbms.mapper.RoleMapper;
@@ -51,7 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public User userLogin(String userCode, String userPassword, HttpServletRequest request) {
-        Common.checkStringIsAnyBlank(userCode, userPassword);
+        CheckInputCommon.checkStringIsAnyBlank(userCode, userPassword);
         if (userPassword.length() < 7) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码长度不能小于7位 (>_<) !!! ");
         }
@@ -82,7 +82,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public Boolean updatePassword(String oldPassword, String newPassword, String reNewPassword, HttpServletRequest request) {
-        Common.checkStringIsAnyBlank(oldPassword, newPassword, reNewPassword);
+        CheckInputCommon.checkStringIsAnyBlank(oldPassword, newPassword, reNewPassword);
         if (newPassword.length() < 7 || reNewPassword.length() < 7) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码长度不能小于7位 (>_<) !!! ");
         }
@@ -166,7 +166,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Date birthday = userAddRequest.getBirthday();
         String phone = userAddRequest.getPhone();
         String address = userAddRequest.getAddress();
-        Common.checkStringIsAnyBlank(userCode, userName, userPassword, confirmPassword, phone, address);
+        CheckInputCommon.checkStringIsAnyBlank(userCode, userName, userPassword, confirmPassword, phone, address);
         isNotNull(userRole, gender, birthday);
         if (!userPassword.equals(confirmPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入有误 (>_<) !!!");
@@ -233,7 +233,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String phone = user.getPhone();
         String address = user.getAddress();
         Long userRole = user.getUserRole();
-        Common.checkStringIsAnyBlank(userCode, userName, userPassword, phone, address);
+        CheckInputCommon.checkStringIsAnyBlank(userCode, userName, userPassword, phone, address);
         if (id == null || id < 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入有误 (>_<) !!!");
         }
@@ -250,8 +250,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param phone    手机号
      */
     private void userPattern(String userCode, String phone) {
-        Common.stringPattern(userCode);
-        Common.phonePattern(phone);
+        CheckInputCommon.stringPattern(userCode);
+        CheckInputCommon.phonePattern(phone);
     }
 }
 

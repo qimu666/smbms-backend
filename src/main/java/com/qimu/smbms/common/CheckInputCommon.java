@@ -1,6 +1,7 @@
-package com.qimu.smbms.constant;
+package com.qimu.smbms.common;
 
 import com.qimu.smbms.common.ErrorCode;
+import com.qimu.smbms.constant.UserConstant;
 import com.qimu.smbms.exception.BusinessException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
  * @Version:1.0
  * @Description: 公共类处理共同的逻辑
  */
-public class Common {
+public class CheckInputCommon {
     /**
      * 检查id是否为空或者为0,如果是就抛出异常
      *

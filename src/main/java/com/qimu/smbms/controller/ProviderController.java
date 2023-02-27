@@ -3,7 +3,7 @@ package com.qimu.smbms.controller;
 import com.qimu.smbms.common.BaseResponse;
 import com.qimu.smbms.common.ErrorCode;
 import com.qimu.smbms.common.ResultUtil;
-import com.qimu.smbms.constant.Common;
+import com.qimu.smbms.common.CheckInputCommon;
 import com.qimu.smbms.exception.BusinessException;
 import com.qimu.smbms.model.domain.Provider;
 import com.qimu.smbms.model.request.ProviderPageRequest;
@@ -46,7 +46,7 @@ public class ProviderController {
      */
     @PostMapping("/providers")
     public BaseResponse<ProviderVo> getProviders(@RequestBody ProviderPageRequest providerPageRequest) {
-        Common.notNull(providerPageRequest);
+        CheckInputCommon.notNull(providerPageRequest);
         Integer pageIndex = providerPageRequest.getPageIndex();
         String proCode = providerPageRequest.getProCode();
         String proName = providerPageRequest.getProName();
@@ -64,7 +64,7 @@ public class ProviderController {
      */
     @GetMapping("/{id}")
     public BaseResponse<Provider> getProvider(@PathVariable("id") Integer id) {
-        Common.checkId(id);
+        CheckInputCommon.checkId(id);
         Provider provider = providerService.getProviderById(id);
         return ResultUtil.success(provider);
     }
@@ -77,7 +77,7 @@ public class ProviderController {
      */
     @PutMapping("/save")
     public BaseResponse<Provider> updateProvider(@RequestBody Provider provider) {
-        Common.notNull(provider);
+        CheckInputCommon.notNull(provider);
         boolean updateStatus = providerService.updateProvider(provider);
         return updateStatus ? ResultUtil.success(ErrorCode.SUCCESS) : ResultUtil.error(ErrorCode.ERROR_CODE, "操作失败");
     }
@@ -90,7 +90,7 @@ public class ProviderController {
      */
     @DeleteMapping("/{id}")
     public BaseResponse<Provider> deleteProvider(@PathVariable("id") Integer id) {
-        Common.checkId(id);
+        CheckInputCommon.checkId(id);
         boolean deleteStatus = providerService.removeById(id);
         return deleteStatus ? ResultUtil.success(ErrorCode.SUCCESS, "删除成功") : ResultUtil.error(ErrorCode.ERROR_CODE, "删除失败");
     }
@@ -104,7 +104,7 @@ public class ProviderController {
 
     @PostMapping("/save")
     public BaseResponse<Long> addProvider(@RequestBody Provider provider) {
-        Common.notNull(provider);
+        CheckInputCommon.notNull(provider);
         Long addStatus = providerService.addProvider(provider);
         return ResultUtil.success(addStatus, ErrorCode.SUCCESS);
     }

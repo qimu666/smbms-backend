@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qimu.smbms.common.ErrorCode;
-import com.qimu.smbms.constant.Common;
+import com.qimu.smbms.common.CheckInputCommon;
 import com.qimu.smbms.exception.BusinessException;
 import com.qimu.smbms.mapper.BillMapper;
 import com.qimu.smbms.mapper.ProviderMapper;
@@ -100,7 +100,7 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         Integer isPayment = bill.getIsPayment();
         Long providerId = bill.getProviderId();
         bill.setCreationDate(new Date());
-        Common.checkStringIsAnyBlank(billCode, productName, productUnit);
+        CheckInputCommon.checkStringIsAnyBlank(billCode, productName, productUnit);
         isNotNull(isPayment, providerId);
         LambdaQueryWrapper<Bill> billLambdaQueryWrapper = new LambdaQueryWrapper<>();
         billLambdaQueryWrapper.eq(Bill::getBillCode, billCode);
@@ -129,7 +129,7 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         String productUnit = bill.getProductUnit();
         Integer isPayment = bill.getIsPayment();
         Long providerId = bill.getProviderId();
-        Common.checkStringIsAnyBlank(billCode, productName, productUnit);
+        CheckInputCommon.checkStringIsAnyBlank(billCode, productName, productUnit);
         if (id == null || id < 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "输入有误 (>_<) !!!");
         }
