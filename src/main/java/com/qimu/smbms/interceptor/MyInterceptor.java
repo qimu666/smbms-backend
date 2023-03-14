@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author qimu
  */
-@Component
+// @Component
 public class MyInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object attribute = request.getSession().getAttribute(UserConstant.USER_LOGIN_STATUS);

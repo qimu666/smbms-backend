@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     private UserMapper userMapper;
@@ -81,6 +80,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return 修改成功或失败
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updatePassword(String oldPassword, String newPassword, String reNewPassword, HttpServletRequest request) {
         CheckInputCommon.checkStringIsAnyBlank(oldPassword, newPassword, reNewPassword);
         if (newPassword.length() < 7 || reNewPassword.length() < 7) {
@@ -156,6 +156,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return 添加的新用户id
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long addUser(UserAddRequest userAddRequest) {
         String userCode = userAddRequest.getUserCode();
         String userName = userAddRequest.getUserName();
@@ -223,6 +224,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return 成功或失败
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateUser(User user) {
         Long id = user.getId();
         String userCode = user.getUserCode();

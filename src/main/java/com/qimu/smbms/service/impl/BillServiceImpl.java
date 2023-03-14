@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
  * @createDate 2023-02-18 15:50:01
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         implements BillService {
     @Resource
@@ -122,6 +121,7 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
      * @return 成功或失败
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateBill(Bill bill) {
         Long id = bill.getId();
         String billCode = bill.getBillCode();

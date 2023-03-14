@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @createDate 2023-02-18 15:50:23
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         implements RoleService {
 

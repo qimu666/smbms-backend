@@ -13,19 +13,19 @@ import javax.annotation.Resource;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Resource
-    private MyInterceptor myInterceptor;
+    // @Resource
+    // private MyInterceptor myInterceptor;
 
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(this.myInterceptor)
-                .addPathPatterns("/**").
-                excludePathPatterns("/user/login", "/user/logout", "/user/current");
-    }
+    // public void addInterceptors(InterceptorRegistry registry) {
+    //     registry.addInterceptor(this.myInterceptor)
+    //             .addPathPatterns("/**").
+    //             excludePathPatterns("/user/login", "/user/logout", "/user/current");
+    // }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
-                .allowedOriginPatterns("http://101.43.61.87", "http://localhost:8090")
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")
                 .allowCredentials(true)
                 .allowedHeaders("*")
                 .allowedMethods("*")

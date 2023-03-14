@@ -16,10 +16,6 @@ import javax.annotation.Resource;
  * @author qimu
  */
 @RestController
-@CrossOrigin(
-        value = {"http://localhost:8089", "http://101.43.61.87"},
-        allowCredentials = "true"
-)
 @RequestMapping("/bill")
 public class BillController {
     @Resource

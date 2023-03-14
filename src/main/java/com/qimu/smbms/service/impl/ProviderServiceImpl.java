@@ -24,7 +24,6 @@ import java.util.List;
  * @createDate 2023-02-18 15:50:20
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class ProviderServiceImpl extends ServiceImpl<ProviderMapper, Provider>
         implements ProviderService {
     @Resource
@@ -74,6 +73,7 @@ public class ProviderServiceImpl extends ServiceImpl<ProviderMapper, Provider>
      * @return 新供应商id
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long addProvider(Provider provider) {
         Provider newProvider = checkParam(provider);
         newProvider.setCreationDate(new Date());
@@ -97,6 +97,7 @@ public class ProviderServiceImpl extends ServiceImpl<ProviderMapper, Provider>
      * @return 成功或失败
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateProvider(Provider provider) {
         Long id = provider.getId();
         Provider newProvider = checkParam(provider);

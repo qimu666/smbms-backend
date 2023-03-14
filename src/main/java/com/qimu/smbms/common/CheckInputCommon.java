@@ -1,6 +1,5 @@
 package com.qimu.smbms.common;
 
-import com.qimu.smbms.common.ErrorCode;
 import com.qimu.smbms.constant.UserConstant;
 import com.qimu.smbms.exception.BusinessException;
 import org.apache.commons.lang3.StringUtils;

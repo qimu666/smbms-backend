@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author qimu
  */
 @RestController
-@CrossOrigin(value = {"http://localhost:8089", "http://101.43.61.87"}, allowCredentials = "true")
 @RequestMapping("/user")
 public class UserController {
     @Resource

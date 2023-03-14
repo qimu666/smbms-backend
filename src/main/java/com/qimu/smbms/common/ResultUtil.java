@@ -39,6 +39,9 @@ public class ResultUtil implements Serializable {
     public static <T> BaseResponse<T> error(int code, String message) {
         return new BaseResponse<>(code, null, message, "");
     }
+    public static <T> BaseResponse<T> error(ErrorCode errorCode) {
+        return new BaseResponse<>(errorCode.getCode(), null, errorCode.getMessage(), errorCode.getDescription());
+    }
 
     public static <T> BaseResponse<T> error(ErrorCode errorCode, String description) {
         return new BaseResponse<>(errorCode.getCode(), null, errorCode.getMessage(), description);
